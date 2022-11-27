@@ -1,4 +1,5 @@
 	.file	"arcsin.c"
+	.intel_syntax noprefix
 	.text
 	.section	.rodata
 .LC0:
@@ -9,23 +10,23 @@
 GetInput:
 .LFB0:
 	.cfi_startproc
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp
+	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	subq	$16, %rsp
-	movq	%fs:40, %rax
-	movq	%rax, -8(%rbp)
-	xorl	%eax, %eax
-	leaq	-16(%rbp), %rax
-	movq	%rax, %rsi
-	leaq	.LC0(%rip), %rdi
-	movl	$0, %eax
+	sub	rsp, 16
+	mov	rax, QWORD PTR fs:40
+	mov	QWORD PTR -8[rbp], rax
+	xor	eax, eax
+	lea	rax, -16[rbp]
+	mov	rsi, rax
+	lea	rdi, .LC0[rip]
+	mov	eax, 0
 	call	__isoc99_scanf@PLT
-	movsd	-16(%rbp), %xmm0
-	movq	-8(%rbp), %rax
-	xorq	%fs:40, %rax
+	movsd	xmm0, QWORD PTR -16[rbp]
+	mov	rax, QWORD PTR -8[rbp]
+	xor	rax, QWORD PTR fs:40
 	je	.L3
 	call	__stack_chk_fail@PLT
 .L3:
@@ -40,28 +41,28 @@ GetInput:
 Fact:
 .LFB1:
 	.cfi_startproc
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp
+	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	movl	%edi, -20(%rbp)
-	movsd	.LC1(%rip), %xmm0
-	movsd	%xmm0, -8(%rbp)
-	movl	$1, -12(%rbp)
+	mov	DWORD PTR -20[rbp], edi
+	movsd	xmm0, QWORD PTR .LC1[rip]
+	movsd	QWORD PTR -8[rbp], xmm0
+	mov	DWORD PTR -12[rbp], 1
 	jmp	.L5
 .L6:
-	cvtsi2sd	-12(%rbp), %xmm0
-	movsd	-8(%rbp), %xmm1
-	mulsd	%xmm1, %xmm0
-	movsd	%xmm0, -8(%rbp)
-	addl	$1, -12(%rbp)
+	cvtsi2sd	xmm0, DWORD PTR -12[rbp]
+	movsd	xmm1, QWORD PTR -8[rbp]
+	mulsd	xmm0, xmm1
+	movsd	QWORD PTR -8[rbp], xmm0
+	add	DWORD PTR -12[rbp], 1
 .L5:
-	movl	-12(%rbp), %eax
-	cmpl	-20(%rbp), %eax
+	mov	eax, DWORD PTR -12[rbp]
+	cmp	eax, DWORD PTR -20[rbp]
 	jle	.L6
-	movsd	-8(%rbp), %xmm0
-	popq	%rbp
+	movsd	xmm0, QWORD PTR -8[rbp]
+	pop	rbp
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
@@ -72,99 +73,99 @@ Fact:
 Arcsin:
 .LFB2:
 	.cfi_startproc
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp
+	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	subq	$80, %rsp
-	movsd	%xmm0, -72(%rbp)
-	pxor	%xmm0, %xmm0
-	movsd	%xmm0, -48(%rbp)
-	movl	$0, -52(%rbp)
-	movsd	.LC1(%rip), %xmm0
-	movsd	%xmm0, -40(%rbp)
-	movsd	-72(%rbp), %xmm0
-	movsd	%xmm0, -32(%rbp)
-	pxor	%xmm0, %xmm0
-	movsd	%xmm0, -24(%rbp)
-	movsd	.LC1(%rip), %xmm0
-	pxor	%xmm1, %xmm1
-	divsd	%xmm1, %xmm0
-	movsd	%xmm0, -16(%rbp)
-	movsd	.LC3(%rip), %xmm0
-	pxor	%xmm1, %xmm1
-	divsd	%xmm1, %xmm0
-	movsd	%xmm0, -8(%rbp)
+	sub	rsp, 80
+	movsd	QWORD PTR -72[rbp], xmm0
+	pxor	xmm0, xmm0
+	movsd	QWORD PTR -48[rbp], xmm0
+	mov	DWORD PTR -52[rbp], 0
+	movsd	xmm0, QWORD PTR .LC1[rip]
+	movsd	QWORD PTR -40[rbp], xmm0
+	movsd	xmm0, QWORD PTR -72[rbp]
+	movsd	QWORD PTR -32[rbp], xmm0
+	pxor	xmm0, xmm0
+	movsd	QWORD PTR -24[rbp], xmm0
+	movsd	xmm0, QWORD PTR .LC1[rip]
+	pxor	xmm1, xmm1
+	divsd	xmm0, xmm1
+	movsd	QWORD PTR -16[rbp], xmm0
+	movsd	xmm0, QWORD PTR .LC3[rip]
+	pxor	xmm1, xmm1
+	divsd	xmm0, xmm1
+	movsd	QWORD PTR -8[rbp], xmm0
 	jmp	.L9
 .L13:
-	movsd	-48(%rbp), %xmm0
-	addsd	-24(%rbp), %xmm0
-	movsd	%xmm0, -48(%rbp)
-	movl	-52(%rbp), %eax
-	addl	%eax, %eax
-	movl	%eax, %edi
+	movsd	xmm0, QWORD PTR -48[rbp]
+	addsd	xmm0, QWORD PTR -24[rbp]
+	movsd	QWORD PTR -48[rbp], xmm0
+	mov	eax, DWORD PTR -52[rbp]
+	add	eax, eax
+	mov	edi, eax
 	call	Fact
-	mulsd	-32(%rbp), %xmm0
-	divsd	-40(%rbp), %xmm0
-	movsd	%xmm0, -80(%rbp)
-	movl	-52(%rbp), %eax
-	movl	%eax, %edi
+	mulsd	xmm0, QWORD PTR -32[rbp]
+	divsd	xmm0, QWORD PTR -40[rbp]
+	movsd	QWORD PTR -80[rbp], xmm0
+	mov	eax, DWORD PTR -52[rbp]
+	mov	edi, eax
 	call	Fact
-	movsd	-80(%rbp), %xmm2
-	divsd	%xmm0, %xmm2
-	movsd	%xmm2, -80(%rbp)
-	movl	-52(%rbp), %eax
-	movl	%eax, %edi
+	movsd	xmm2, QWORD PTR -80[rbp]
+	divsd	xmm2, xmm0
+	movsd	QWORD PTR -80[rbp], xmm2
+	mov	eax, DWORD PTR -52[rbp]
+	mov	edi, eax
 	call	Fact
-	movsd	-80(%rbp), %xmm2
-	divsd	%xmm0, %xmm2
-	movapd	%xmm2, %xmm0
-	movl	-52(%rbp), %eax
-	addl	%eax, %eax
-	addl	$1, %eax
-	cvtsi2sd	%eax, %xmm1
-	divsd	%xmm1, %xmm0
-	movsd	%xmm0, -24(%rbp)
-	movsd	-72(%rbp), %xmm0
-	mulsd	-72(%rbp), %xmm0
-	movsd	-32(%rbp), %xmm1
-	mulsd	%xmm1, %xmm0
-	movsd	%xmm0, -32(%rbp)
-	movsd	-40(%rbp), %xmm1
-	movsd	.LC4(%rip), %xmm0
-	mulsd	%xmm1, %xmm0
-	movsd	%xmm0, -40(%rbp)
-	addl	$1, -52(%rbp)
+	movsd	xmm2, QWORD PTR -80[rbp]
+	divsd	xmm2, xmm0
+	movapd	xmm0, xmm2
+	mov	eax, DWORD PTR -52[rbp]
+	add	eax, eax
+	add	eax, 1
+	cvtsi2sd	xmm1, eax
+	divsd	xmm0, xmm1
+	movsd	QWORD PTR -24[rbp], xmm0
+	movsd	xmm0, QWORD PTR -72[rbp]
+	mulsd	xmm0, QWORD PTR -72[rbp]
+	movsd	xmm1, QWORD PTR -32[rbp]
+	mulsd	xmm0, xmm1
+	movsd	QWORD PTR -32[rbp], xmm0
+	movsd	xmm1, QWORD PTR -40[rbp]
+	movsd	xmm0, QWORD PTR .LC4[rip]
+	mulsd	xmm0, xmm1
+	movsd	QWORD PTR -40[rbp], xmm0
+	add	DWORD PTR -52[rbp], 1
 .L9:
-	movsd	-24(%rbp), %xmm0
-	ucomisd	-16(%rbp), %xmm0
+	movsd	xmm0, QWORD PTR -24[rbp]
+	ucomisd	xmm0, QWORD PTR -16[rbp]
 	jp	.L14
-	movsd	-24(%rbp), %xmm0
-	ucomisd	-16(%rbp), %xmm0
+	movsd	xmm0, QWORD PTR -24[rbp]
+	ucomisd	xmm0, QWORD PTR -16[rbp]
 	je	.L10
 .L14:
-	movsd	-24(%rbp), %xmm0
-	ucomisd	-8(%rbp), %xmm0
+	movsd	xmm0, QWORD PTR -24[rbp]
+	ucomisd	xmm0, QWORD PTR -8[rbp]
 	jp	.L15
-	movsd	-24(%rbp), %xmm0
-	ucomisd	-8(%rbp), %xmm0
+	movsd	xmm0, QWORD PTR -24[rbp]
+	ucomisd	xmm0, QWORD PTR -8[rbp]
 	je	.L10
 .L15:
-	pxor	%xmm0, %xmm0
-	ucomisd	-32(%rbp), %xmm0
+	pxor	xmm0, xmm0
+	ucomisd	xmm0, QWORD PTR -32[rbp]
 	jp	.L13
-	pxor	%xmm0, %xmm0
-	ucomisd	-32(%rbp), %xmm0
+	pxor	xmm0, xmm0
+	ucomisd	xmm0, QWORD PTR -32[rbp]
 	jne	.L13
 .L10:
-	movq	-48(%rbp), %rax
-	movq	%rax, -80(%rbp)
-	movsd	-80(%rbp), %xmm0
-	leaq	.LC0(%rip), %rdi
-	movl	$1, %eax
+	mov	rax, QWORD PTR -48[rbp]
+	mov	QWORD PTR -80[rbp], rax
+	movsd	xmm0, QWORD PTR -80[rbp]
+	lea	rdi, .LC0[rip]
+	mov	eax, 1
 	call	printf@PLT
-	movl	$10, %edi
+	mov	edi, 10
 	call	putchar@PLT
 	nop
 	leave
@@ -182,36 +183,36 @@ Arcsin:
 main:
 .LFB3:
 	.cfi_startproc
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp
+	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	subq	$48, %rsp
-	movl	%edi, -20(%rbp)
-	movq	%rsi, -32(%rbp)
-	movl	$0, %eax
+	sub	rsp, 48
+	mov	DWORD PTR -20[rbp], edi
+	mov	QWORD PTR -32[rbp], rsi
+	mov	eax, 0
 	call	GetInput
-	movq	%xmm0, %rax
-	movq	%rax, -8(%rbp)
-	movsd	.LC3(%rip), %xmm0
-	ucomisd	-8(%rbp), %xmm0
+	movq	rax, xmm0
+	mov	QWORD PTR -8[rbp], rax
+	movsd	xmm0, QWORD PTR .LC3[rip]
+	ucomisd	xmm0, QWORD PTR -8[rbp]
 	ja	.L17
-	movsd	-8(%rbp), %xmm0
-	movsd	.LC1(%rip), %xmm1
-	ucomisd	%xmm1, %xmm0
+	movsd	xmm0, QWORD PTR -8[rbp]
+	movsd	xmm1, QWORD PTR .LC1[rip]
+	ucomisd	xmm0, xmm1
 	jbe	.L22
 .L17:
-	leaq	.LC5(%rip), %rdi
+	lea	rdi, .LC5[rip]
 	call	puts@PLT
 	jmp	.L20
 .L22:
-	movq	-8(%rbp), %rax
-	movq	%rax, -40(%rbp)
-	movsd	-40(%rbp), %xmm0
+	mov	rax, QWORD PTR -8[rbp]
+	mov	QWORD PTR -40[rbp], rax
+	movsd	xmm0, QWORD PTR -40[rbp]
 	call	Arcsin
 .L20:
-	movl	$0, %eax
+	mov	eax, 0
 	leave
 	.cfi_def_cfa 7, 8
 	ret
