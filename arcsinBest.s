@@ -43,7 +43,6 @@ Fact:
 	movsd	xmm0, xmm11
 	pop	rbp
 	ret
-	.size	Fact, .-Fact
 	.globl	Arcsin
 	.type	Arcsin, @function
 Arcsin:
@@ -138,8 +137,6 @@ Arcsin:
 	nop
 	leave
 	ret
-	.size	Arcsin, .-Arcsin
-	.section	.rodata
 .LC5:
 	.string	"Incorrect"
 	.text
@@ -189,5 +186,3 @@ main:
 .LC4:
 	.long	0
 	.long	1074790400
-	.ident	"GCC: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
-	.section	.note.GNU-stack,"",@progbits
